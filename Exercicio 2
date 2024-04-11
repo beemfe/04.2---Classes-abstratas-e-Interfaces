@@ -1,0 +1,108 @@
+interface EstudanteOperacoes {
+    float percentualRendimento(Estudante est);
+    float percentualProgressao(Estudante est);
+}
+
+class Estudante {
+    private String ra;
+    private String nome;
+    private String email;
+    private float mediaNotas;
+    private int qtdAprovacoes;
+
+    public Estudante(String ra, String nome, String email, float mediaNotas, int qtdAprovacoes) {
+        this.ra = ra;
+        this.nome = nome;
+        this.email = email;
+        this.mediaNotas = mediaNotas;
+        this.qtdAprovacoes = qtdAprovacoes;
+    }
+
+    public String getRa() {
+        return ra;
+    }
+
+    public void setRa(String ra) {
+        this.ra = ra;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public float getMediaNotas() {
+        return mediaNotas;
+    }
+
+    public void setMediaNotas(float mediaNotas) {
+        this.mediaNotas = mediaNotas;
+    }
+
+    public int getQtdAprovacoes() {
+        return qtdAprovacoes;
+    }
+
+    public void setQtdAprovacoes(int qtdAprovacoes) {
+        this.qtdAprovacoes = qtdAprovacoes;
+    }
+}
+
+class EstudanteTecnico extends Estudante implements EstudanteOperacoes {
+    public EstudanteTecnico(String ra, String nome, String email, float mediaNotas, int qtdAprovacoes) {
+        super(ra, nome, email, mediaNotas, qtdAprovacoes);
+    }
+
+    public float percentualRendimento(Estudante est) {
+        return est.getMediaNotas() * est.getQtdAprovacoes() * 0.931f;
+    }
+
+    public float percentualProgressao(Estudante est) {
+        return est.getQtdAprovacoes() / 3.0f;
+    }
+}
+
+class EstudanteSuperior extends Estudante implements EstudanteOperacoes {
+    private String instituicaoSegundoGrau;
+    private int anoConclusaoSegundoGrau;
+
+    public EstudanteSuperior(String ra, String nome, String email, float mediaNotas, int qtdAprovacoes,
+                             String instituicaoSegundoGrau, int anoConclusaoSegundoGrau) {
+        super(ra, nome, email, mediaNotas, qtdAprovacoes);
+        this.instituicaoSegundoGrau = instituicaoSegundoGrau;
+        this.anoConclusaoSegundoGrau = anoConclusaoSegundoGrau;
+    }
+
+    public float percentualRendimento(Estudante est) {
+        return est.getMediaNotas() * est.getQtdAprovacoes() * 0.972f;
+    }
+
+    public float percentualProgressao(Estudante est) {
+        return est.getQtdAprovacoes() / 6.0f;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        EstudanteTecnico estudanteTecnico = new EstudanteTecnico("123", "João", "joao@example.com", 7.5f, 9);
+        EstudanteSuperior estudanteSuperior = new EstudanteSuperior("456", "Maria", "maria@example.com", 8.2f, 12,
+                "Escola XYZ", 2018);
+
+        System.out.println("Percentual de Rendimento do Estudante Técnico: " + estudanteTecnico.percentualRendimento(estudanteTecnico));
+        System.out.println("Percentual de Progressão do Estudante Técnico: " + estudanteTecnico.percentualProgressao(estudanteTecnico));
+
+        System.out.println("Percentual de Rendimento do Estudante Superior: " + estudanteSuperior.percentualRendimento(estudanteSuperior));
+        System.out.println("Percentual de Progressão do Estudante Superior: " + estudanteSuperior.percentualProgressao(estudanteSuperior));
+    }
+}
